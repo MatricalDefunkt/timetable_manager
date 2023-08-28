@@ -5,9 +5,15 @@
   "author": "Multiple",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "dev": "nodemon src/index.ts"
+  },
   "dependencies": {
     "dotenv": "^16.3.1",
     "mysql2": "^3.6.0",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "typescript": "^5.1.6"
   }
 }
