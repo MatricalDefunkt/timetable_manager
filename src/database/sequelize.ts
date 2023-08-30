@@ -1,4 +1,4 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 import { config } from "dotenv";
 
 config();
@@ -13,9 +13,11 @@ const sequelize = new Sequelize(
   process.env.DB_ROOT_PASSWORD,
   {
     host: "localhost",
-    dialect: "mysql",
+    dialect: "postgres",
     port: Number(process.env.DB_PORT),
   }
 );
 
-(async () => {})();
+
+
+export default sequelize;
