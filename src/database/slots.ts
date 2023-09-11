@@ -6,57 +6,57 @@ import Teachers from "./teachers";
 
 class Slots extends Model<{
   id: number | null;
-  startTime: string;
-  endTime: string;
+  starttime: string;
+  endtime: string;
   duration: number;
-  subjectId: number;
-  teacherId: number;
-  classroomId: number;
+  subjectid: number;
+  teacherid: number;
+  classroomid: number;
 }> {
   public get id(): number {
     return this.getDataValue("id")!;
   }
-  public get startTime(): string {
-    return this.getDataValue("start_time" as "startTime");
+  public get starttime(): string {
+    return this.getDataValue("starttime");
   }
-  public get endTime(): string {
-    return this.getDataValue("end_time" as "endTime");
+  public get endtime(): string {
+    return this.getDataValue("endtime");
   }
   public get duration(): number {
     return this.getDataValue("duration");
   }
-  public get subjectId(): number {
-    return this.getDataValue("subject_id" as "subjectId");
+  public get subjectid(): number {
+    return this.getDataValue("subjectid");
   }
-  public get teacherId(): number {
-    return this.getDataValue("teacher_id" as "teacherId");
+  public get teacherid(): number {
+    return this.getDataValue("teacherid");
   }
-  public get classroomId(): number {
-    return this.getDataValue("class_id" as "classroomId");
+  public get classroomid(): number {
+    return this.getDataValue("classroomid");
   }
 
-  public set startTime(value: string) {
-    this.setDataValue("start_time" as "startTime", value);
+  public set starttime(value: string) {
+    this.setDataValue("starttime", value);
     this._save();
   }
-  public set endTime(value: string) {
-    this.setDataValue("end_time" as "endTime", value);
+  public set endtime(value: string) {
+    this.setDataValue("endtime", value);
     this._save();
   }
   public set duration(value: number) {
     this.setDataValue("duration", value);
     this._save();
   }
-  public set subjectId(value: number) {
-    this.setDataValue("subject_id" as "subjectId", value);
+  public set subjectid(value: number) {
+    this.setDataValue("subjectid", value);
     this._save();
   }
-  public set teacherId(value: number) {
-    this.setDataValue("teacher_id" as "teacherId", value);
+  public set teacherid(value: number) {
+    this.setDataValue("teacherid", value);
     this._save();
   }
-  public set classroomId(value: number) {
-    this.setDataValue("class_id" as "classroomId", value);
+  public set classroomid(value: number) {
+    this.setDataValue("classroomid", value);
     this._save();
   }
 
@@ -72,11 +72,11 @@ Slots.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    startTime: {
+    starttime: {
       type: DataTypes.TIME,
       allowNull: false,
     },
-    endTime: {
+    endtime: {
       type: DataTypes.TIME,
       allowNull: false,
     },
@@ -84,15 +84,15 @@ Slots.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    subjectId: {
+    subjectid: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    teacherId: {
+    teacherid: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    classroomId: {
+    classroomid: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -121,7 +121,5 @@ Slots.hasOne(Classroom, {
   sourceKey: "id",
   as: "class",
 });
-
-Slots.sync();
 
 export default Slots;

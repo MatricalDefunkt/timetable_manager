@@ -4,21 +4,21 @@ import Batch from "./batch";
 
 class Division extends Model<{
   id: number | null;
-  batchId: number;
+  batchid: number;
   name: string;
 }> {
   public get id(): number {
     return this.getDataValue("id")!;
   }
-  public get batchId(): number {
-    return this.getDataValue("batch_id" as "batchId");
+  public get batchid(): number {
+    return this.getDataValue("batchid");
   }
   public get name(): string {
     return this.getDataValue("name");
   }
 
-  public set batchId(value: number) {
-    this.setDataValue("batch_id" as "batchId", value);
+  public set batchid(value: number) {
+    this.setDataValue("batchid", value);
     this._save();
   }
   public set name(value: string) {
@@ -38,7 +38,7 @@ Division.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    batchId: {
+    batchid: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -55,11 +55,9 @@ Division.init(
 );
 
 Division.hasMany(Batch, {
-  foreignKey: "batch_id",
+  foreignKey: "id",
   sourceKey: "id",
   as: "batch",
 });
-
-Division.sync();
 
 export default Division;

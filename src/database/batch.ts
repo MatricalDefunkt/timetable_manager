@@ -5,7 +5,7 @@ class Batch extends Model<{
   id: number | null;
   year: number;
   branch: string;
-  totalStudents: number;
+  totalstudents: number;
 }> {
   public get id(): number {
     return this.getDataValue("id")!;
@@ -16,8 +16,8 @@ class Batch extends Model<{
   public get branch(): string {
     return this.getDataValue("branch");
   }
-  public get totalStudents(): number {
-    return this.getDataValue("total_number_of_students" as "totalStudents");
+  public get totalstudents(): number {
+    return this.getDataValue("totalstudents");
   }
 
   public set year(value: number) {
@@ -28,8 +28,8 @@ class Batch extends Model<{
     this.setDataValue("branch", value);
     this._save;
   }
-  public set totalStudents(value: number) {
-    this.setDataValue("total_number_of_students" as "totalStudents", value);
+  public set totalstudents(value: number) {
+    this.setDataValue("totalstudents", value);
     this._save;
   }
   private async _save() {
@@ -40,20 +40,20 @@ class Batch extends Model<{
 Batch.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     year: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     branch: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    totalStudents: {
-      type: DataTypes.INTEGER.UNSIGNED,
+    totalstudents: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

@@ -11,7 +11,7 @@ const databases = {
   Classroom,
   Division,
   Slots,
-  Subject,
+  Subjects: Subject,
   Teacher,
   sequelize,
 };

@@ -4,8 +4,8 @@ import sequelize from "./sequelize";
 class Teachers extends Model<{
   id: number | null;
   name: string;
-  expertise: string;
-  maxConcurrent: number;
+  expertise: string[];
+  maxconcurrentslots: number;
 }> {
   public get id(): number {
     return this.getDataValue("id")!;
@@ -13,23 +13,23 @@ class Teachers extends Model<{
   public get name(): string {
     return this.getDataValue("name");
   }
-  public get expertise(): string {
+  public get expertise(): string[] {
     return this.getDataValue("expertise");
   }
-  public get maxConcurrent(): number {
-    return this.getDataValue("max_concurrent" as "maxConcurrent");
+  public get maxconcurrentslots(): number {
+    return this.getDataValue("maxconcurrentslots");
   }
 
   public set name(value: string) {
     this.setDataValue("name", value);
     this._save();
   }
-  public set expertise(value: string) {
+  public set expertise(value: string[]) {
     this.setDataValue("expertise", value);
     this._save();
   }
-  public set maxConcurrent(value: number) {
-    this.setDataValue("max_concurrent" as "maxConcurrent", value);
+  public set maxconcurrentslots(value: number) {
+    this.setDataValue("maxconcurrentslots", value);
     this._save();
   }
 
@@ -50,10 +50,10 @@ Teachers.init(
       allowNull: false,
     },
     expertise: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.ARRAY(DataTypes.STRING(255)),
       allowNull: false,
     },
-    maxConcurrent: {
+    maxconcurrentslots: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -64,7 +64,5 @@ Teachers.init(
     timestamps: false,
   }
 );
-
-Teachers.sync();
 
 export default Teachers;

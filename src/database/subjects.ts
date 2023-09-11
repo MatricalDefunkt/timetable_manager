@@ -6,7 +6,7 @@ class Subjects extends Model<{
   name: string;
   semester: number;
   credits: number;
-  maxConcurrent: number;
+  maxconcurrentslots: number;
 }> {
   public get id(): number {
     return this.getDataValue("id")!;
@@ -20,8 +20,8 @@ class Subjects extends Model<{
   public get credits(): number {
     return this.getDataValue("credits")!;
   }
-  public get maxConcurrent(): number {
-    return this.getDataValue("max_concurrent_slots" as "maxConcurrent")!;
+  public get maxconcurrentslots(): number {
+    return this.getDataValue("maxconcurrentslots")!;
   }
 
   public set id(value: number) {
@@ -44,7 +44,7 @@ class Subjects extends Model<{
 Subjects.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
@@ -53,15 +53,15 @@ Subjects.init(
       allowNull: false,
     },
     credits: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     semester: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    maxConcurrent: {
-      type: DataTypes.INTEGER.UNSIGNED,
+    maxconcurrentslots: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
@@ -71,7 +71,5 @@ Subjects.init(
     timestamps: false,
   }
 );
-
-Subjects.sync();
 
 export default Subjects;
