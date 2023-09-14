@@ -105,19 +105,16 @@ Slots.init(
 );
 
 Slots.hasOne(Subjects, {
-  foreignKey: "subject_id",
   sourceKey: "id",
   as: "subject",
 });
 
 Slots.hasOne(Teachers, {
-  foreignKey: "teacher_id",
   sourceKey: "id",
   as: "teacher",
 });
 
 Slots.hasOne(Classroom, {
-  foreignKey: "class_id",
   sourceKey: "id",
   as: "class",
 });

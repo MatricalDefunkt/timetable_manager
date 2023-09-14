@@ -1,15 +1,16 @@
 import { Elysia } from "elysia";
+import plugin from "./routes/v1";
 
 const app = new Elysia();
 
-app.get("/", () => {
-  return Bun.file("src/public/index.html");
+app.get("/", ({ set }) => {
+  set.status = 200;
+  return {
+    message: "Hello, Prishita!",
+  };
 });
 
-app.get("*", () => {
-  return Bun.file("src/public/403.html");
-});
-
+app.use(plugin);
 app.listen(3000);
 
 console.log("Server is running on port 3000");

@@ -55,7 +55,6 @@ Division.init(
 );
 
 Division.hasMany(Batch, {
-  foreignKey: "id",
   sourceKey: "id",
   as: "batch",
 });

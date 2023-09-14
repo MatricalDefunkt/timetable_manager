@@ -2,7 +2,7 @@ import Batch from "./batch";
 import Classroom from "./classroom";
 import Division from "./division";
 import Slots from "./slots";
-import Subject from "./subjects";
+import Subjects from "./subjects";
 import Teacher from "./teachers";
 import sequelize from "./sequelize";
 
@@ -11,7 +11,7 @@ const databases = {
   Classroom,
   Division,
   Slots,
-  Subjects: Subject,
+  Subjects,
   Teacher,
   sequelize,
 };
