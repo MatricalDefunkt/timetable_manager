@@ -104,19 +104,6 @@ Slots.init(
   }
 );
 
-Slots.hasOne(Subjects, {
-  sourceKey: "id",
-  as: "subject",
-});
-
-Slots.hasOne(Teachers, {
-  sourceKey: "id",
-  as: "teacher",
-});
-
-Slots.hasOne(Classroom, {
-  sourceKey: "id",
-  as: "class",
-});
+Slots.sync();
 
 export default Slots;

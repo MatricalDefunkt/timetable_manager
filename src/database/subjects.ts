@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
+import Classroom from "./classroom";
 
 class Subjects extends Model<{
   id: number | null;
@@ -71,5 +72,9 @@ Subjects.init(
     timestamps: false,
   }
 );
+
+Subjects.sync();
+
+Subjects.belongsTo(Classroom, { foreignKey: "id", as: "classroomid" })
 
 export default Subjects;

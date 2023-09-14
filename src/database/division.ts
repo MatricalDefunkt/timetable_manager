@@ -54,6 +54,8 @@ Division.init(
   }
 );
 
+Division.sync();
+
 Division.hasMany(Batch, {
   sourceKey: "id",
   as: "batch",

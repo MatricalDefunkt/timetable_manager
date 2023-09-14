@@ -12,10 +12,20 @@ plugin.group("/v1", (plugin) => {
       };
     })
     .get("/teachers", async ({ query, set, headers }) => {
-      if (!headers.includes(Bun.env.BEARER_TOKEN))
+      console.log(headers);
+      if (
+        !headers.authorization ||
+        (headers.authorization.startsWith("Bearer") &&
+          headers.authorization.split(" ")[1] == Bun.env.BEARER_TOKEN)
+      ) {
+        set.status = 401;
+        return {
+          message: "Unauthorized",
+        };
+      }
       if (query.q == "all") {
         set.status = 200;
-        return await databases.Teacher.findAll();
+        return await databases.Classroom.findAll();
       } else {
         set.status = 400;
         return {

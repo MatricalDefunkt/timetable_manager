@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
+import Classroom from "./classroom";
 
 class Teachers extends Model<{
   id: number | null;
@@ -64,5 +65,9 @@ Teachers.init(
     timestamps: false,
   }
 );
+
+Teachers.sync();
+
+Teachers.belongsTo(Classroom, { foreignKey: "", as: "id" });
 
 export default Teachers;

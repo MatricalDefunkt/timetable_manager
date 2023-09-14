@@ -69,4 +69,6 @@ Classroom.init(
   }
 );
 
+Classroom.sync();
+
 export default Classroom;
