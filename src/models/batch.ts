@@ -1,17 +1,20 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
+import { Database } from "../types";
 
-class Batch extends Model<{
+type TBatch = {
   id: number | null;
-  year: number;
+  passingyear: number;
   branch: string;
   totalstudents: number;
-}> {
+};
+
+class Batches extends Database<TBatch> {
   public get id(): number {
     return this.getDataValue("id")!;
   }
-  public get year(): number {
-    return this.getDataValue("year");
+  public get passingyear(): number {
+    return this.getDataValue("passingyear");
   }
   public get branch(): string {
     return this.getDataValue("branch");
@@ -20,8 +23,8 @@ class Batch extends Model<{
     return this.getDataValue("totalstudents");
   }
 
-  public set year(value: number) {
-    this.setDataValue("year", value);
+  public set passingyear(value: number) {
+    this.setDataValue("passingyear", value);
     this._save();
   }
   public set branch(value: string) {
@@ -32,19 +35,32 @@ class Batch extends Model<{
     this.setDataValue("totalstudents", value);
     this._save;
   }
+
+  public static isValid(body: unknown): body is TBatch {
+    return typeof body === "object" && body !== null && Batches.getAttributes()
+      ? Object.keys(Batches.getAttributes()).every(
+          (key) =>
+            key in body &&
+            typeof (body as any)[key] ===
+              // @ts-ignore
+              typeof Batches.getAttributes()[key].defaultValue
+        )
+      : false;
+  }
+
   private async _save() {
     await this.save();
   }
 }
 
-Batch.init(
+Batches.init(
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    year: {
+    passingyear: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -59,11 +75,11 @@ Batch.init(
   },
   {
     sequelize,
-    tableName: "batch",
+    tableName: "batches",
     timestamps: false,
   }
 );
 
-Batch.sync();
+Batches.sync();
 
-export default Batch;
+export default Batches;

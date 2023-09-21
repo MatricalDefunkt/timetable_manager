@@ -1,10 +1,10 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
-import Classroom from "./classroom";
+import Classrooms from "./classroom";
 import Subjects from "./subjects";
 import Teachers from "./teachers";
 
-class Slots extends Model<{
+type TSlot = {
   id: number | null;
   starttime: string;
   endtime: string;
@@ -12,7 +12,9 @@ class Slots extends Model<{
   subjectid: number;
   teacherid: number;
   classroomid: number;
-}> {
+};
+
+class Slots extends Model<TSlot> {
   public get id(): number {
     return this.getDataValue("id")!;
   }
@@ -58,6 +60,18 @@ class Slots extends Model<{
   public set classroomid(value: number) {
     this.setDataValue("classroomid", value);
     this._save();
+  }
+
+  public static isValid(body: unknown): body is TSlot {
+    return typeof body === "object" && body !== null && Slots.getAttributes()
+      ? Object.keys(Slots.getAttributes()).every(
+          (key) =>
+            key in body &&
+            typeof (body as any)[key] ===
+              // @ts-ignore
+              typeof Slots.getAttributes()[key].defaultValue
+        )
+      : false;
   }
 
   private async _save() {

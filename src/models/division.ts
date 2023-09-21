@@ -1,12 +1,15 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
-import Batch from "./batch";
+import Batches from "./batch";
+import { Database } from "../types";
 
-class Division extends Model<{
+type TDivision = {
   id: number | null;
   batchid: number;
   name: string;
-}> {
+};
+
+class Divisions extends Database<TDivision> {
   public get id(): number {
     return this.getDataValue("id")!;
   }
@@ -26,12 +29,24 @@ class Division extends Model<{
     this._save();
   }
 
+  public static isValid(body: unknown): body is TDivision {
+    return typeof body === "object" && body !== null && Divisions.getAttributes()
+      ? Object.keys(Divisions.getAttributes()).every(
+          (key) =>
+            key in body &&
+            typeof (body as any)[key] ===
+              // @ts-ignore
+              typeof Divisions.getAttributes()[key].defaultValue
+        )
+      : false;
+  }
+
   private async _save() {
     await this.save();
   }
 }
 
-Division.init(
+Divisions.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -49,16 +64,16 @@ Division.init(
   },
   {
     sequelize,
-    tableName: "division",
+    tableName: "divisions",
     timestamps: false,
   }
 );
 
-Division.sync();
+Divisions.sync();
 
-Division.hasMany(Batch, {
+Divisions.hasMany(Batches, {
   sourceKey: "id",
   as: "batch",
 });
 
-export default Division;
+export default Divisions;

@@ -1,14 +1,16 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
-import Classroom from "./classroom";
+import Classrooms from "./classroom";
 
-class Subjects extends Model<{
+type TSubject = {
   id: number | null;
   name: string;
   semester: number;
   credits: number;
   maxconcurrentslots: number;
-}> {
+};
+
+class Subjects extends Model<TSubject> {
   public get id(): number {
     return this.getDataValue("id")!;
   }
@@ -37,6 +39,19 @@ class Subjects extends Model<{
     this.setDataValue("semester", value);
     this._save();
   }
+
+  public static isValid(body: unknown): body is TSubject {
+    return typeof body === "object" && body !== null && Subjects.getAttributes()
+      ? Object.keys(Subjects.getAttributes()).every(
+          (key) =>
+            key in body &&
+            typeof (body as any)[key] ===
+              // @ts-ignore
+              typeof Subjects.getAttributes()[key].defaultValue
+        )
+      : false;
+  }
+
   private async _save() {
     await this.save();
   }
@@ -75,6 +90,6 @@ Subjects.init(
 
 Subjects.sync();
 
-Subjects.belongsTo(Classroom, { foreignKey: "id", as: "classroomid" })
+Subjects.belongsTo(Classrooms, { foreignKey: "id", as: "classroomid" });
 
 export default Subjects;

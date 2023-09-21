@@ -1,13 +1,16 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
-import Classroom from "./classroom";
+import Classrooms from "./classroom";
+import { Database } from "../types";
 
-class Teachers extends Model<{
+type TTeacher = {
   id: number | null;
   name: string;
   expertise: string[];
   maxconcurrentslots: number;
-}> {
+};
+
+class Teachers extends Database<TTeacher> {
   public get id(): number {
     return this.getDataValue("id")!;
   }
@@ -32,6 +35,18 @@ class Teachers extends Model<{
   public set maxconcurrentslots(value: number) {
     this.setDataValue("maxconcurrentslots", value);
     this._save();
+  }
+
+  public static isValid(body: unknown): body is TTeacher {
+    return typeof body === "object" && body !== null && Teachers.getAttributes()
+      ? Object.keys(Teachers.getAttributes()).every(
+          (key) =>
+            key in body &&
+            typeof (body as any)[key] ===
+              // @ts-ignore
+              typeof Teachers.getAttributes()[key].defaultValue
+        )
+      : false;
   }
 
   private async _save() {
@@ -68,6 +83,6 @@ Teachers.init(
 
 Teachers.sync();
 
-Teachers.belongsTo(Classroom, { foreignKey: "", as: "id" });
+Teachers.belongsTo(Classrooms, { foreignKey: "id", as: "classroomid" });
 
 export default Teachers;

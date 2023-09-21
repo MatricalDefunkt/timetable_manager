@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
+import { Database } from "../types";
 
 export type ClassroomTypes =
   | "lab"
@@ -9,11 +10,13 @@ export type ClassroomTypes =
   | "project"
   | "other";
 
-class Classroom extends Model<{
+export type TClassroom = {
   id: number | null;
   type: ClassroomTypes;
   capacity: number;
-}> {
+};
+
+class Classrooms extends Database<TClassroom> {
   public get id(): number {
     return this.getDataValue("id")!;
   }
@@ -33,12 +36,26 @@ class Classroom extends Model<{
     this._save();
   }
 
+  public static isValid(body: unknown): body is TClassroom {
+    return typeof body === "object" &&
+      body !== null &&
+      Classrooms.getAttributes()
+      ? Object.keys(Classrooms.getAttributes()).every(
+          (key) =>
+            key in body &&
+            typeof (body as any)[key] ===
+              // @ts-ignore
+              typeof Classrooms.getAttributes()[key].defaultValue
+        )
+      : false;
+  }
+
   private async _save() {
     await this.save();
   }
 }
 
-Classroom.init(
+Classrooms.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -64,11 +81,11 @@ Classroom.init(
   },
   {
     sequelize,
-    tableName: "classroom",
+    tableName: "classrooms",
     timestamps: false,
   }
 );
 
-Classroom.sync();
+Classrooms.sync();
 
-export default Classroom;
+export default Classrooms;
