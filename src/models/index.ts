@@ -5,7 +5,6 @@ import Slots from "./slots";
 import Subjects from "./subjects";
 import Teachers from "./teachers";
 import sequelize from "./sequelize";
-import { Database } from "../types";
 
 const databases = {
   Batches,

@@ -1,8 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
-import Classrooms from "./classroom";
-import Subjects from "./subjects";
-import Teachers from "./teachers";
+import { Database } from "../types";
 
 type TSlot = {
   id: number | null;
@@ -14,7 +12,7 @@ type TSlot = {
   classroomid: number;
 };
 
-class Slots extends Model<TSlot> {
+class Slots extends Database<TSlot> {
   public get id(): number {
     return this.getDataValue("id")!;
   }

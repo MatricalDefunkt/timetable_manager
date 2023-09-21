@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
 import Classrooms from "./classroom";
+import { Database } from "../types";
 
 type TSubject = {
   id: number | null;
@@ -10,7 +11,7 @@ type TSubject = {
   maxconcurrentslots: number;
 };
 
-class Subjects extends Model<TSubject> {
+class Subjects extends Database<TSubject> {
   public get id(): number {
     return this.getDataValue("id")!;
   }

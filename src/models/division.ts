@@ -30,7 +30,9 @@ class Divisions extends Database<TDivision> {
   }
 
   public static isValid(body: unknown): body is TDivision {
-    return typeof body === "object" && body !== null && Divisions.getAttributes()
+    return typeof body === "object" &&
+      body !== null &&
+      Divisions.getAttributes()
       ? Object.keys(Divisions.getAttributes()).every(
           (key) =>
             key in body &&
