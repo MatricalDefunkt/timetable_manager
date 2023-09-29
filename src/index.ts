@@ -1,4 +1,6 @@
+import Elysia from "elysia";
 import Models from "./models"; // Import your Sequelize models
+import plugin from "./routes/v1";
 
 const { Batches, Classrooms, Divisions, Slots, Subjects, Teachers } = Models;
 
@@ -37,3 +39,17 @@ export async function timetableGenerator(
     throw new Error("Error generating timetable: " + error);
   }
 }
+
+const app = new Elysia();
+
+app.use(plugin);
+
+app.get("/", () => {
+  return {
+    message: "Hello World!",
+  };
+});
+
+app.listen(3000, () => {
+  console.log("Server listening on port 3000");
+});

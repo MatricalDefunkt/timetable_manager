@@ -6,13 +6,9 @@ const plugin = new Elysia();
 
 const { Batches, Classrooms, Divisions, Slots, Subjects, Teachers } = databases;
 
-const createRoutesForDatabase = (
-  database: ModelStatic<any>,
-  baseUrl: string
-) => {
-  const resourceName = baseUrl.split("/").pop();
-
-  plugin.group("/v1/", (plugin) => {
+const createRoutesForDatabase = (database: ModelStatic<any>) => {
+  plugin.group("/v1", (plugin) => {
+    const resourceName = database.name.toLowerCase();
     return plugin
       .get(`/${resourceName}`, async ({ query, set, headers }) => {
         if (
@@ -47,6 +43,7 @@ const createRoutesForDatabase = (
         }
       })
       .post(`/${resourceName}`, async ({ body, set, headers }) => {
+        console.log("here");
         if (
           !headers.authorization ||
           (headers.authorization.startsWith("Bearer") &&
@@ -71,7 +68,7 @@ const createRoutesForDatabase = (
           .catch((err) => {
             set.status = 400;
             return {
-              message: err.message,
+              error: err,
             };
           });
         set.status = 201;
@@ -86,8 +83,7 @@ const createRoutesForDatabase = (
   });
 };
 
-// Assuming you have an array of databases to create routes for
-const databasesList: { name: string; database: ModelStatic<any> }[] = [
+const dbarray: { name: string; database: ModelStatic<any> }[] = [
   { name: "Teachers", database: Teachers },
   { name: "Classrooms", database: Classrooms },
   { name: "Divisions", database: Divisions },
@@ -97,8 +93,8 @@ const databasesList: { name: string; database: ModelStatic<any> }[] = [
 ];
 
 // Create routes for each database in the list
-databasesList.forEach(({ name, database }) => {
-  createRoutesForDatabase(database, `/v1/${name.toLowerCase()}`);
+dbarray.forEach((dbarray) => {
+  createRoutesForDatabase(dbarray.database);
 });
 
 export default plugin;
