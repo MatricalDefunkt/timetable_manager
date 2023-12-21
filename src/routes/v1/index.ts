@@ -16,9 +16,9 @@ const createRoutesForDatabase = (database: ModelStatic<any>) => {
           (headers.authorization.startsWith("Bearer") &&
             headers.authorization.split(" ")[1] == Bun.env.BEARER_TOKEN)
         ) {
-          set.status = 401;
+          set.status = 403;
           return {
-            message: "Unauthorized",
+            message: "Forbidden",
           };
         }
         if (query.q == "all") {
@@ -43,15 +43,14 @@ const createRoutesForDatabase = (database: ModelStatic<any>) => {
         }
       })
       .post(`/${resourceName}`, async ({ body, set, headers }) => {
-        console.log("here");
         if (
           !headers.authorization ||
           (headers.authorization.startsWith("Bearer") &&
             headers.authorization.split(" ")[1] == Bun.env.BEARER_TOKEN)
         ) {
-          set.status = 401;
+          set.status = 403;
           return {
-            message: "Unauthorized",
+            message: "Forbidden",
           };
         }
         if (typeof body != "object") {

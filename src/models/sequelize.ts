@@ -9,11 +9,11 @@ if (!Bun.env.DB_ROOT_PASSWORD || !Bun.env.DB_PORT || !Bun.env.DB_HOST) {
 const sequelize = new Sequelize(
   "timetable_manager",
   "postgres",
-  process.env.DB_ROOT_PASSWORD,
+  Bun.env.DB_ROOT_PASSWORD,
   {
     host: Bun.env.DB_HOST,
     dialect: "postgres",
-    port: Number(process.env.DB_PORT),
+    port: Number(Bun.env.DB_PORT),
   }
 );
 
